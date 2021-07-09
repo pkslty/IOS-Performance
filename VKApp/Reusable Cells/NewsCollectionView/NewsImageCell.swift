@@ -15,6 +15,7 @@ class NewsImageCell: UICollectionViewCell {
     @IBOutlet weak var plus: UILabel!
     
     func configure(imageUrlString: String, plus: Int?) {
+        image.image = nil
         ImageLoader.getImage(from: imageUrlString) { [weak self] image in
             self?.image.image = image
         }
@@ -24,8 +25,5 @@ class NewsImageCell: UICollectionViewCell {
         self.plus.text = "+\(plus)"*/
     }
     
-    override func prepareForReuse() {
-        image.image = nil
-        plus.text = nil
-    }
+
 }

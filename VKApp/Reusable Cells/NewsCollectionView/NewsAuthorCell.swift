@@ -14,26 +14,38 @@ class NewsAuthorCell: UICollectionViewCell {
     @IBOutlet weak var authorName: UILabel!
     
     @IBOutlet weak var postDate: UILabel!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    
+    var task: URLSessionDataTask?
 
-    func configure(imageUrlString: String, name: String, date: Double, isRepost: Bool = false) {
-        ImageLoader.getImage(from: imageUrlString) { [weak self] image in
-            self?.authorPhoto.image = image
+
+    func configure(id: Int? = nil, imageUrlString: String, name: String, date: Double, isRepost: Bool = false) {
+        if id == nil {
+            ImageLoader.getImage(from: imageUrlString) { [weak self] image in
+                self?.authorPhoto.image = image
+            }
+            authorName.text = isRepost ? "\u{21a9} \(name)" : name
+            postDate.text = NSDate(timeIntervalSince1970: date).description
+            print("Celltext:\(authorName.text)")
         }
-        
-        authorName.text = isRepost ? "\u{21a9} \(name)" : name
-        postDate.text = NSDate(timeIntervalSince1970: date).description
+        else {
+            task = NetworkService.getUserById(id: id!) { [weak self] user in
+                print("Task Ended")
+                self?.authorName.text = user.first!.fullName
+                self?.postDate.text = NSDate(timeIntervalSince1970: date).description
+                ImageLoader.getImage(from: user.first!.avatarUrlString) { [weak self] image in
+                    self?.authorPhoto.image = image
+                }
+            }
+        }
         
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        authorName.text = String()
-        postDate.text = String()
-        authorPhoto.image = nil
+        if let task = task {
+            task.cancel()
+            print("task \(task.description) cancelled")
+        }
     }
     
 }

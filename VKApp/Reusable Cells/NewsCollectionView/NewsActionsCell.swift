@@ -36,6 +36,5 @@ class NewsActionsCell: UICollectionViewCell {
             repostButton.count = 0
             repostButton.pressed = false
         }
-        
     }
 }

@@ -20,31 +20,32 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYu-6u-xHj">
                         <rect key="frame" x="0.0" y="0.0" width="638" height="371"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CXI-Nc-jfv">
-                                <rect key="frame" x="0.0" y="0.0" width="638" height="123.5"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXI-Nc-jfv">
+                                <rect key="frame" x="0.0" y="0.0" width="638" height="371"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="CXI-Nc-jfv" secondAttribute="trailing" id="FuI-U4-qzI"/>
-                            <constraint firstItem="CXI-Nc-jfv" firstAttribute="leading" secondItem="hYu-6u-xHj" secondAttribute="leading" id="k27-Dv-66L"/>
-                            <constraint firstItem="CXI-Nc-jfv" firstAttribute="top" secondItem="hYu-6u-xHj" secondAttribute="top" id="xKm-tW-rnp"/>
+                            <constraint firstItem="CXI-Nc-jfv" firstAttribute="top" secondItem="hYu-6u-xHj" secondAttribute="top" id="1t5-AA-xPA"/>
+                            <constraint firstAttribute="trailing" secondItem="CXI-Nc-jfv" secondAttribute="trailing" id="96l-2j-tv8"/>
+                            <constraint firstAttribute="bottom" secondItem="CXI-Nc-jfv" secondAttribute="bottom" id="9bw-tL-sBQ"/>
+                            <constraint firstItem="CXI-Nc-jfv" firstAttribute="leading" secondItem="hYu-6u-xHj" secondAttribute="leading" id="UIk-L6-ZCs"/>
                         </constraints>
                     </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="hYu-6u-xHj" secondAttribute="trailing" id="GDX-sa-jYj"/>
-                <constraint firstAttribute="bottom" secondItem="hYu-6u-xHj" secondAttribute="bottom" id="XnB-Qj-liQ"/>
-                <constraint firstItem="hYu-6u-xHj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="l1r-7Z-Cgz"/>
-                <constraint firstItem="hYu-6u-xHj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ol2-to-ZPn"/>
+                <constraint firstAttribute="bottom" secondItem="hYu-6u-xHj" secondAttribute="bottom" id="JDA-B8-k4c"/>
+                <constraint firstAttribute="trailing" secondItem="hYu-6u-xHj" secondAttribute="trailing" id="Kva-cy-ofs"/>
+                <constraint firstItem="hYu-6u-xHj" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="P5N-8E-vNr"/>
+                <constraint firstItem="hYu-6u-xHj" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="eRV-Jf-LbC"/>
             </constraints>
             <size key="customSize" width="638" height="371"/>
             <connections>

@@ -57,10 +57,10 @@ class NewsCollectionViewLayout: UICollectionViewLayout {
                     if let text = newsController.vkNews[section].copyHistory == nil ?
                         newsController.vkNews[section].text :
                         newsController.vkNews[section].copyHistory?.first?.text {
-                    let cellHeightThatFits = UITextView.estimatedSize(text, targetSize: CGSize(width: cellWidth, height: .zero)).height
+                    let cellHeightThatFits = UITextView.estimatedSize(text, targetSize: CGSize(width: cellWidth, height: .greatestFiniteMagnitude)).height
                     //newsController.textCellHeightsThatFits[section] = cellHeightThatFits
                     var cellHeight = textCellHeight
-                        cellHeight = cellHeightThatFits + 20
+                        cellHeight = cellHeightThatFits
                     /*if !newsController.vkNews[section].isTextFolded || textCellHeight > cellHeightThatFits {
                         cellHeight = cellHeightThatFits
                     }*/
@@ -93,28 +93,6 @@ class NewsCollectionViewLayout: UICollectionViewLayout {
                     attributes.frame = CGRect(x: 0, y: lastY + cellInterval, width: cellWidth, height: imageCellHeight)
                     lastY += imageCellHeight + cellInterval
                 default:
-                    /*if newsController.posts[section].isImagesFolded {
-                        switch newsController.posts[section].images.count {
-                        case 1:
-                            attributes.frame = CGRect(x: 0, y: lastY, width: cellWidth, height: imageCellHeight)
-                            lastY += imageCellHeight
-                        case let count where count > 1:
-                            if firstImageInRow {
-                                attributes.frame = CGRect(x: 0, y: lastY, width: cellWidth / 2, height: imageCellHeight / 2)
-                                firstImageInRow = false
-                            } else {
-                                attributes.frame = CGRect(x: cellWidth / 2, y: lastY, width: cellWidth / 2, height: imageCellHeight / 2)
-                                lastY += imageCellHeight / 2
-                                firstImageInRow = true
-                            }
-                        default:
-                            print("default")
-                            break
-                        }
-                    } else {
-                        attributes.frame = CGRect(x: 0, y: lastY, width: cellWidth, height: imageCellHeight)
-                        lastY += imageCellHeight
-                    }*/
                     print("whatever")
                 }
                 totalCellsHeight = lastY
@@ -141,10 +119,12 @@ class NewsCollectionViewLayout: UICollectionViewLayout {
 }
 
 extension UITextView {
-
-   public static func estimatedSize(_ text: String, targetSize: CGSize) -> CGSize {
-       let textView = UITextView(frame: .zero)
-    textView.text = text
-       return textView.sizeThatFits(targetSize)
+    public static func estimatedSize(_ text: String, targetSize: CGSize) -> CGSize {
+        let newsNetFontSize: CGFloat = 15
+        let textView = UITextView(frame: CGRect(origin: .zero, size: CGSize(width: targetSize.width, height: .greatestFiniteMagnitude)))
+        textView.text = text
+        textView.isScrollEnabled = false
+        textView.font = .systemFont(ofSize: newsNetFontSize)
+        return textView.sizeThatFits(targetSize)
    }
 }

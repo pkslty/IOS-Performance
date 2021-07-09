@@ -23,14 +23,11 @@ class NewsVideoCell: UICollectionViewCell {
             return
         }
         let request = URLRequest(url: url)
-        webView.load(request)
-        /*self.plus.isHidden = true
-        guard let plus = plus, plus > 0 else { return}
-        self.plus.isHidden = false
-        self.plus.text = "+\(plus)"*/
+        self.webView.load(request)
     }
 
     override func prepareForReuse() {
+        super.prepareForReuse()
         webView.load(URLRequest(url: URL(string: "about:blank")!))
     }
 }

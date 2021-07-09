@@ -11,13 +11,10 @@ class NewsTextCell: UICollectionViewCell {
 
     @IBOutlet weak var text: UITextView!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 
     func configure(text: String) {
         self.text.text = text
+        let size = self.text.sizeThatFits(CGSize(width: self.frame.width, height: .infinity))
     }
     
 }

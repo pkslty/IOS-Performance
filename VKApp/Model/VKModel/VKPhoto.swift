@@ -8,7 +8,6 @@
 import UIKit
 
 struct VKPhoto: Decodable {
-    let prefferedPhotoSizes = ["y", "x", "z", "w", "m", "r", "q", "p", "o", "s"]
     var proportions: CGFloat
     let albumId: Int
     let date: Double
@@ -57,7 +56,7 @@ struct VKPhoto: Decodable {
         self.hasTags = try values.decode(Bool.self, forKey: .hasTags)
         self.accessKey = try? values.decode(String.self, forKey: .accessKey)
         self.postId = try? values.decode(Int.self, forKey: .postId)
-        self.sizes = try values.decode([VKPhotoSize].self, forKey: .sizes)
+        let sizes = try values.decode([VKPhotoSize].self, forKey: .sizes)
         //self.imageUrlString = sizes.first(where: { photoSize in
         //    photoSize.width > 200
         //})?.urlString
@@ -69,13 +68,13 @@ struct VKPhoto: Decodable {
         self.canComment = try? values.decode(Int.self, forKey: .canComment) == 1 ? true : false
         self.canRepost = try? values.decode(Int.self, forKey: .canRepost) == 1 ? true : false
         
+        let prefferedPhotoSizes = ["y", "x", "z", "w", "m", "r", "q", "p", "o", "s"]
         var num: Int = 0
         var canExit = false
         for psize in prefferedPhotoSizes {
             for (i, size) in sizes.enumerated() {
                 if size.type == psize {
                     num = i
-                    print("psize=\(psize) vs size = \(size)")
                     canExit = true
                 }
             }
@@ -85,7 +84,8 @@ struct VKPhoto: Decodable {
         }
 
         self.imageUrlString = sizes[num].urlString
-        self.proportions = CGFloat(sizes[num].height / sizes[num].width)
+        self.proportions = CGFloat(sizes[num].height) / CGFloat(sizes[num].width)
+        self.sizes = [sizes[num]]
     }
     
 }

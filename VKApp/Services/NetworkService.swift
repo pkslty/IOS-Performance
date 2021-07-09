@@ -34,42 +34,52 @@ class NetworkService {
         }
     }
     
-    static func getUserById(id: Int, completionBlock: @escaping ([VKUser]) -> Void) {
-        let parameters = [
-            "user_ids" : String(id),
-            "fields" : "photo_200_orig",
-        ]
-        request(method: "users.get", parameters: parameters) { data in
-            do {
-                let vkResponse = try JSONDecoder().decode(VKResponse<[VKUser]>.self, from: data)
-                completionBlock(vkResponse.response)
+    static func getUserById(id: Int, completionBlock: @escaping ([VKUser]) -> Void) -> URLSessionDataTask? {
+        //DispatchQueue.global().async {
+            let parameters = [
+                "user_ids" : String(id),
+                "fields" : "photo_200_orig",
+            ]
+            let task = request(method: "users.get", parameters: parameters) { data in
+                do {
+                    let vkResponse = try JSONDecoder().decode(VKResponse<[VKUser]>.self, from: data)
+                    completionBlock(vkResponse.response)
+                }
+                catch let error {
+                    print("JSON error: \(error)")
+                    print("DATA is \(data)")
+                    let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+                    print("JSON is \(String(describing: json))")
+                    return
+                }
             }
-            catch let error {
-                print("JSON error: \(error)")
-                return
-            }
-        }
+        //}
+        return task
     }
     
-    static func getGroupById(id: Int, completionBlock: @escaping ([VKGroup]) -> Void) {
+    static func getGroupById(id: Int, completionBlock: @escaping ([VKGroup]) -> Void) -> URLSessionDataTask? {
         let parameters = [
             "group_ids" : String(id),
             "fields" : "photo_200",
         ]
-        request(method: "groups.getById", parameters: parameters) { data in
+        let task = request(method: "groups.getById", parameters: parameters) { data in
             do {
                 let vkResponse = try JSONDecoder().decode(VKResponse<[VKGroup]>.self, from: data)
                 completionBlock(vkResponse.response)
             }
             catch let error {
                 print("JSON error: \(error)")
+                print("DATA is \(data)")
+                let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+                print("JSON is \(String(describing: json))")
                 return
             }
         }
+        return task
     }
     
-    static func performVkMethod(method: String, with parameters: [String: String], token: String = Session.Instance.token, completionBlock: @escaping (Data) -> Void) {
-        request(method: method, parameters: parameters, token: token) { data in
+    static func performVkMethod(method: String, with parameters: [String: String], token: String = Session.Instance.token, completionBlock: @escaping (Data) -> Void) -> URLSessionDataTask? {
+        return request(method: method, parameters: parameters, token: token) { data in
             completionBlock(data)
         }
     }
@@ -84,6 +94,9 @@ class NetworkService {
             guard let vkResponse = try? JSONDecoder().decode(VKResponse<VKItems<VKRealmGroup>>.self, from: data)
             else {
                 print("JSON Decode fail")
+                print("DATA is \(data)")
+                let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+                print("JSON is \(json)")
                 return
             }
             callBack(vkResponse.response.items)
@@ -99,6 +112,9 @@ class NetworkService {
             guard let vkResponse = try? JSONDecoder().decode(VKResponse<VKItems<VKRealmGroup>>.self, from: data)
             else {
                 print("JSON Decode fail")
+                print("DATA is \(data)")
+                let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+                print("JSON is \(json)")
                 return
             }
             completionBlock(vkResponse.response.items)
@@ -115,45 +131,44 @@ class NetworkService {
             guard let vkResponse = try? JSONDecoder().decode(VKResponse<VKItems<VKRealmPhoto>>.self, from: data)
             else {
                 print("JSON Decode fail")
+                print("DATA is \(data)")
+                let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+                print("JSON is \(json)")
                 return
             }
             DispatchQueue.main.async {
                 completionBlock(vkResponse.response.items)
             }
-            //callBack(vkResponse.response.items)
         }
 
     }
     
-    static private func request(method: String, parameters: [String: String], token: String = Session.Instance.token, completionBlock: @escaping (Data) -> Void) {
-        url.path = "/method/" + method
-        url.queryItems = [
-            URLQueryItem(name: "access_token", value: token),
-            URLQueryItem(name: "v", value: api_version)]
-        for (parameter, value) in parameters {
-            url.queryItems?.append(
-                URLQueryItem(name: parameter, value: value))
-        }
-        
-        guard let url = url.url else { return }
-        print(url)
-        
+    static private func request(method: String, parameters: [String: String], token: String = Session.Instance.token, completionBlock: @escaping (Data) -> Void) -> URLSessionDataTask? {
+            url.path = "/method/" + method
+            url.queryItems = [
+                URLQueryItem(name: "access_token", value: token),
+                URLQueryItem(name: "v", value: api_version)]
+            for (parameter, value) in parameters {
+                url.queryItems?.append(
+                    URLQueryItem(name: parameter, value: value))
+            }
+            
+            guard let url = url.url else { return nil}
+            print(url)
+            
         let task = session.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                print("Request error: \(String(describing: error))")
-            return
+                guard error == nil else {
+                    print("Request error: \(String(describing: error))")
+                    return
+                }
+                guard let data = data else { return }
+                DispatchQueue.main.async {
+                    completionBlock(data)
+                }
+                
             }
-            guard let data = data else { return }
-            DispatchQueue.main.async {
-                completionBlock(data)
-            }
-            //let queue = DispatchQueue.global()
-            /*queue.async {
-                completionBlock(data)
-            }*/
-
-        }
-        task.resume()
+            task.resume()
+        return task
 
     }
     
@@ -163,28 +178,24 @@ class NetworkService {
             print("NetworkService error: Invalid url")
             return
         }
-        let task = session.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                print("NetworkService error: \(String(describing: error))")
-                print("URL: \(url)")
-            return
+        DispatchQueue.global().async {
+            let task = session.dataTask(with: url) { data, response, error in
+                guard error == nil else {
+                    print("NetworkService error: \(String(describing: error))")
+                    print("URL: \(url)")
+                    return
+                }
+                guard let data = data
+                else {
+                    print("NetworkService error: No data")
+                    return
+                }
+                DispatchQueue.main.async {
+                    completionBlock(data)
+                }
             }
-            guard let data = data
-            else {
-                print("NetworkService error: No data")
-                return
-            }
-            let queue = DispatchQueue.global()
-            queue.async {
-                completionBlock(data)
-            }
-            /*DispatchQueue.main.async {
-                completionBlock(data)
-            }*/
-            //completionBlock(data)
-
+            task.resume()
         }
-        task.resume()
     }
     
 }
