@@ -48,20 +48,12 @@ class NewsViewController: UIViewController, UICollectionViewDelegate{
         newsCollection.register(UINib(nibName: "NewsActionsCell", bundle: nil), forCellWithReuseIdentifier: "NewsActionsCell")
         newsCollection.register(UINib(nibName: "NewsVideoCell", bundle: nil), forCellWithReuseIdentifier: "NewsVideoCell")
         
-        NetworkService.performVkMethod(method: "newsfeed.get", with: ["count":"100", "filters":"post"]) { [weak self] data in
-            let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
-            do {
-                let response = (try JSONDecoder().decode(VKResponse<VKNewsFeed>.self, from: data)).response
-                self?.vkNews = response.items
-                self?.nextFrom = response.nextFrom ?? "none"
-                self?.profiles = response.profiles
-                self?.groups = response.groups
-                //print("JSON: \(json)")
-                //print("VKNEWS: \(self?.vkNews)")
-                self?.newsCollection.reloadData()
-            } catch let error {
-                print("error is \(error)")
-            }
+        NetworkService.getNewsFeed(start_from: "") { [weak self] vkNews, nextFrom, profiles, groups in
+            self?.vkNews = vkNews
+            self?.nextFrom = nextFrom
+            self?.profiles = profiles
+            self?.groups = groups
+            self?.newsCollection.reloadData()
         }
         
         //newsCollection.backgroundColor = .systemBackground
@@ -108,6 +100,11 @@ extension NewsViewController: UICollectionViewDataSource {
                 //photosNum += 1
                 numberOfItems += 1
                 currentItem += 1
+                DispatchQueue.global(qos: .background).async {
+                    ImageLoader.getImage(from: (photo.imageUrlString)!) { image in
+                        print("\(String(describing: image?.description)) loaded")
+                    }
+                }
                 cellDescriptor[currentItem] = cellDataDescription(type: .photo, photoNum: num)
             }
         }
@@ -118,6 +115,11 @@ extension NewsViewController: UICollectionViewDataSource {
                     numberOfItems += 1
                     currentItem += 1
                     cellDescriptor[currentItem] = cellDataDescription(type: .attachmentPhoto, photoNum: num)
+                    DispatchQueue.global(qos: .background).async {
+                        ImageLoader.getImage(from: (attachment.photo?.imageUrlString)!) { image in
+                            print("\(String(describing: image?.description)) loaded")
+                        }
+                    }
                 case "link":
                     numberOfItems += 1
                     currentItem += 1

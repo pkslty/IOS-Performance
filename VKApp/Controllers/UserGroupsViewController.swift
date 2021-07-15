@@ -17,6 +17,7 @@ class UserGroupsViewController: UITableViewController {
         case insert
     }
     var token: NotificationToken?
+    let operationQueue = OperationQueue()
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
         
@@ -31,9 +32,18 @@ class UserGroupsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let getGroupsOperation = GetGroupsOperation()
+        let parsingGroupsOperation = ParsingGroupsOperation()
+        let saveGroupsToRealmOperation = SaveGroupsToRealmOperation()
+        saveGroupsToRealmOperation.addDependency(parsingGroupsOperation)
+        parsingGroupsOperation.addDependency(getGroupsOperation)
+        operationQueue.addOperations([getGroupsOperation, parsingGroupsOperation,],
+                                     waitUntilFinished: false)
+        OperationQueue.main.addOperations([saveGroupsToRealmOperation,], waitUntilFinished: false)
+        
         getGroups()
         
-        token = groups?.observe({ changes in
+        self.token = self.groups?.observe({ changes in
             switch changes {
             case .initial:
                 self.tableView.reloadData()
@@ -45,6 +55,7 @@ class UserGroupsViewController: UITableViewController {
                 print(error)
             }
         })
+        
 
 
     }
@@ -67,7 +78,7 @@ class UserGroupsViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateGroups()
+        //updateGroups()
     }
 
     // MARK: - Table view data source

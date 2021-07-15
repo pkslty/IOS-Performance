@@ -13,6 +13,7 @@
 		3601F2CD266809BA008B6719 /* VKRealmPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3601F2CC266809BA008B6719 /* VKRealmPhoto.swift */; };
 		36149766266D0D930027C5A6 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36149765266D0D930027C5A6 /* RealmService.swift */; };
 		36149768266FA5470027C5A6 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36149767266FA5470027C5A6 /* ImageLoader.swift */; };
+		3621B31E269DC83700D4CB89 /* ReadMoreTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3621B31D269DC83700D4CB89 /* ReadMoreTextView.swift */; };
 		3622FC3726298914009977D8 /* FriendsTableCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3622FC3626298914009977D8 /* FriendsTableCellHeader.swift */; };
 		3623CAA926851CC80050EDC4 /* VKNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3623CAA826851CC80050EDC4 /* VKNew.swift */; };
 		3647BFE5263899090058B600 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647BFE4263899080058B600 /* Animations.swift */; };
@@ -69,6 +70,10 @@
 		36A351AC265FC7C6004F095F /* VKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A351AB265FC7C6004F095F /* VKPhoto.swift */; };
 		36A351AE265FD1E7004F095F /* VKGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A351AD265FD1E7004F095F /* VKGroup.swift */; };
 		36A4F3842629A7B800109FCB /* AllGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A4F3832629A7B800109FCB /* AllGroupsViewController.swift */; };
+		36A996CC26A06F6200ED5480 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A996CB26A06F6200ED5480 /* AsyncOperation.swift */; };
+		36A996CE26A073B600ED5480 /* GetGroupsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A996CD26A073B600ED5480 /* GetGroupsOperation.swift */; };
+		36A996D026A075E100ED5480 /* ParsingGroupsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A996CF26A075E100ED5480 /* ParsingGroupsOperation.swift */; };
+		36A996D226A07C6800ED5480 /* SaveGroupsToRealmOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A996D126A07C6800ED5480 /* SaveGroupsToRealmOperation.swift */; };
 		36B39DBA269798A600E8E3F4 /* VKNewsFeedProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B39DB9269798A500E8E3F4 /* VKNewsFeedProfile.swift */; };
 		36B39DBC26979E2800E8E3F4 /* VKNewsFeedGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B39DBB26979E2800E8E3F4 /* VKNewsFeedGroup.swift */; };
 		36B7F6A9261C871200D1289D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B7F6A8261C871200D1289D /* Post.swift */; };
@@ -87,6 +92,7 @@
 		3601F2CC266809BA008B6719 /* VKRealmPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKRealmPhoto.swift; sourceTree = "<group>"; };
 		36149765266D0D930027C5A6 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		36149767266FA5470027C5A6 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		3621B31D269DC83700D4CB89 /* ReadMoreTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMoreTextView.swift; sourceTree = "<group>"; };
 		3622FC3626298914009977D8 /* FriendsTableCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableCellHeader.swift; sourceTree = "<group>"; };
 		3623CAA826851CC80050EDC4 /* VKNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKNew.swift; sourceTree = "<group>"; };
 		3647BFE4263899080058B600 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
@@ -150,6 +156,10 @@
 		36A351AB265FC7C6004F095F /* VKPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKPhoto.swift; sourceTree = "<group>"; };
 		36A351AD265FD1E7004F095F /* VKGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKGroup.swift; sourceTree = "<group>"; };
 		36A4F3832629A7B800109FCB /* AllGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsViewController.swift; sourceTree = "<group>"; };
+		36A996CB26A06F6200ED5480 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
+		36A996CD26A073B600ED5480 /* GetGroupsOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGroupsOperation.swift; sourceTree = "<group>"; };
+		36A996CF26A075E100ED5480 /* ParsingGroupsOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingGroupsOperation.swift; sourceTree = "<group>"; };
+		36A996D126A07C6800ED5480 /* SaveGroupsToRealmOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGroupsToRealmOperation.swift; sourceTree = "<group>"; };
 		36B39DB9269798A500E8E3F4 /* VKNewsFeedProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKNewsFeedProfile.swift; sourceTree = "<group>"; };
 		36B39DBB26979E2800E8E3F4 /* VKNewsFeedGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKNewsFeedGroup.swift; sourceTree = "<group>"; };
 		36B7F6A8261C871200D1289D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -254,6 +264,7 @@
 				368485F4261BAA1200CCCAF4 /* Model */,
 				369631B4261500E100AC37C0 /* SceneDelegate.swift */,
 				36C978B32621A79000FA1D12 /* Reusable Cells */,
+				36A996CA26A06F3600ED5480 /* Operation */,
 				3647BFE3263898C50058B600 /* Transitions */,
 				36C978B22621A6BF00FA1D12 /* Custom View */,
 				369631CA2615E80F00AC37C0 /* Controllers */,
@@ -327,9 +338,21 @@
 			path = VKModel;
 			sourceTree = "<group>";
 		};
+		36A996CA26A06F3600ED5480 /* Operation */ = {
+			isa = PBXGroup;
+			children = (
+				36A996CB26A06F6200ED5480 /* AsyncOperation.swift */,
+				36A996CD26A073B600ED5480 /* GetGroupsOperation.swift */,
+				36A996CF26A075E100ED5480 /* ParsingGroupsOperation.swift */,
+				36A996D126A07C6800ED5480 /* SaveGroupsToRealmOperation.swift */,
+			);
+			path = Operation;
+			sourceTree = "<group>";
+		};
 		36C978B22621A6BF00FA1D12 /* Custom View */ = {
 			isa = PBXGroup;
 			children = (
+				3621B31D269DC83700D4CB89 /* ReadMoreTextView.swift */,
 				366F81662623047B007122AD /* CategoriesPicker.swift */,
 				366F81622621B4AB007122AD /* ActionButton.swift */,
 				3658BF052620286C0047E093 /* RoundShadowView.swift */,
@@ -504,6 +527,7 @@
 				3647BFE5263899090058B600 /* Animations.swift in Sources */,
 				366E83222688689A00DBE0F9 /* VKComments.swift in Sources */,
 				36603527266783B900BEDEEB /* VKRealmGroup.swift in Sources */,
+				36A996D026A075E100ED5480 /* ParsingGroupsOperation.swift in Sources */,
 				3622FC3726298914009977D8 /* FriendsTableCellHeader.swift in Sources */,
 				36A4F3842629A7B800109FCB /* AllGroupsViewController.swift in Sources */,
 				3694546F261CD78F00B60CF6 /* NewGroupCell.swift in Sources */,
@@ -520,13 +544,17 @@
 				369631B3261500E100AC37C0 /* AppDelegate.swift in Sources */,
 				368F6AD6262CC566008156D3 /* NewsActionsCell.swift in Sources */,
 				36A351A6265F9418004F095F /* VKUser.swift in Sources */,
+				36A996D226A07C6800ED5480 /* SaveGroupsToRealmOperation.swift in Sources */,
 				366E8320268864A600DBE0F9 /* VKLikes.swift in Sources */,
 				368485F9261BAB1F00CCCAF4 /* Person.swift in Sources */,
+				36A996CC26A06F6200ED5480 /* AsyncOperation.swift in Sources */,
 				3600EEE026317F4E003D633F /* LoadingIndicator.swift in Sources */,
+				3621B31E269DC83700D4CB89 /* ReadMoreTextView.swift in Sources */,
 				366E83242688696D00DBE0F9 /* VKReposts.swift in Sources */,
 				36A351AC265FC7C6004F095F /* VKPhoto.swift in Sources */,
 				36E454F0265301F900CE2D17 /* Session.swift in Sources */,
 				366E83362688A3AA00DBE0F9 /* VKNewsFeed.swift in Sources */,
+				36A996CE26A073B600ED5480 /* GetGroupsOperation.swift in Sources */,
 				366E83322688888800DBE0F9 /* VKImage.swift in Sources */,
 				366E832E2688824700DBE0F9 /* VKAttachment.swift in Sources */,
 				36149766266D0D930027C5A6 /* RealmService.swift in Sources */,

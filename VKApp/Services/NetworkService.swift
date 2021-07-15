@@ -122,6 +122,26 @@ class NetworkService {
 
     }
     
+    static func getNewsFeed(count: Int = 100, start_from: String, completionBlock: @escaping ([VKNew], String, [Int: VKNewsFeedProfile], [Int: VKNewsFeedGroup]) -> Void) {
+        
+        performVkMethod(method: "newsfeed.get", with: ["count":"100", "filters":"post"]) { data in
+            //let json = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+            do {
+                let response = (try JSONDecoder().decode(VKResponse<VKNewsFeed>.self, from: data)).response
+                //print("JSON: \(json)")
+                //print("VKNEWS: \(self?.vkNews)")
+                DispatchQueue.main.async {
+                    completionBlock(response.items,
+                                    response.nextFrom ?? "none",
+                                    response.profiles,
+                                    response.groups)
+                }
+            } catch let error {
+                print("Error in parsing NewsFeed: \(error)")
+            }
+        }
+    }
+    
     static func getPhotos(of userId: Int, completionBlock: @escaping ([VKRealmPhoto]) -> Void) {
         let parameters = [
             "owner_id" : String(userId),
