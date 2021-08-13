@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import PromiseKit
 
 
 
@@ -65,7 +66,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate {
     }
     
     @objc func refreshTable() {
-        updateFriends()
+        //updateFriends()
+        updateFriendsPromise()
         
     }
     
@@ -91,7 +93,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        updateFriends()
+        //updateFriends()
+        updateFriendsPromise()
     }
     
     private func prepareSections() {
@@ -134,6 +137,31 @@ class FriendsViewController: UIViewController, UITableViewDelegate {
             }
             //self?.prepareSections()
             //self?.friendTable.reloadData()
+        }
+    }
+    
+    private func updateFriendsPromise() {
+        
+        let parameters = [
+            "order" : "hints",
+            "fields" : "nickname,photo_200_orig",
+            "user_id" : String(Session.Instance.userId),
+        ]
+        
+        firstly {
+            NetworkService.requestPromise(method: "friends.get", parameters: parameters)
+        }
+        .then { data in
+            NetworkService.getFriendsPromise(data: data)
+        }
+        .done { friends in
+            try RealmService.save(items: friends)
+            DispatchQueue.main.async {
+                self.friendTable.refreshControl?.endRefreshing()
+            }
+        }
+        .catch { error in
+            print("PromiseKit Error: \(error)")
         }
     }
     

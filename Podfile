@@ -7,4 +7,5 @@ target 'VKApp' do
 
   # Pods for VKApp
   pod 'RealmSwift', '~>10.7.6'
+  pod 'PromiseKit'
 end

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PromiseKit
 
 class NetworkService {
     static private let session = URLSession.shared
@@ -31,6 +32,18 @@ class NetworkService {
                 return
             }
             completionBlock(vkResponse.response.items)
+        }
+    }
+    
+    static func getFriendsPromise(data: Data) -> Promise<[VKRealmUser]> {
+        Promise { (seal) in
+            do {
+                let vkResponse = try JSONDecoder().decode(VKResponse<VKItems<VKRealmUser>>.self, from: data)
+                seal.fulfill(vkResponse.response.items)
+            }
+            catch {
+                seal.reject(error)
+            }
         }
     }
     
@@ -189,7 +202,36 @@ class NetworkService {
             }
             task.resume()
         return task
-
+    }
+    
+    static func requestPromise(
+        method: String,
+        parameters: [String: String],
+        token: String = Session.Instance.token) -> Promise<Data> {
+        
+        url.path = "/method/" + method
+        url.queryItems = [
+            URLQueryItem(name: "access_token", value: token),
+            URLQueryItem(name: "v", value: api_version)]
+        for (parameter, value) in parameters {
+            url.queryItems?.append(
+                URLQueryItem(name: parameter, value: value))
+        }
+            
+        return Promise { (seal) in
+            if let url = url.url {
+                let task = session.dataTask(with: url) { data, response, error in
+                    if let error = error {
+                        seal.reject(error)
+                    }
+                    if let data = data {
+                        seal.fulfill(data)
+                    }
+                }
+                task.resume()
+            }
+        }
+        
     }
     
     static func getData(from url: String, completionBlock: @escaping (Data) -> Void) {
